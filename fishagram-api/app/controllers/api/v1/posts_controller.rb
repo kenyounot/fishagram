@@ -3,14 +3,17 @@ class Api::V1::PostsController < ApplicationController
 
   def index
     @posts = Post.all
-    render json: @posts
+    render json: {
+      data: {
+        posts: @posts
+      }
+    }
   end
 
   def create
     @post = Post.new(post_params)
 
     if @post.save
-      
       render json: {
         data: @post,
         status: :created,
