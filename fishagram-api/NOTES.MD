@@ -9,6 +9,7 @@
 
     * User
         - has_many Posts
+        - has_many Comments
         - username 
         - email
         - password
@@ -22,7 +23,12 @@
         - length(optional)
         - lure used
         - likes
-     * Like
+
+    * Comment
+        - belongs_to User
+        - belongs_to Post
+        - has text
+    * Like
         - belongs_to User
         - belongs_to Post
 
