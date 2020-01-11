@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-5.times do
-    Post.create()
-end
+
+    Post.create(caption: Faker::Hipster.sentences(number: 1), weight: Faker::Number.within(range: 1..10), length: Faker::Number.within(range: 1..10), lure_used: Faker::Hipster.word, user_id: Faker::Number.within(range: 0..2) )
+    Post.create(caption: Faker::Hipster.sentences(number: 1), weight: Faker::Number.within(range: 1..10), length: Faker::Number.within(range: 1..10), lure_used: Faker::Hipster.word, user_id: Faker::Number.within(range: 0..2) )
+    Post.create(caption: Faker::Hipster.sentences(number: 1), weight: Faker::Number.within(range: 1..10), length: Faker::Number.within(range: 1..10), lure_used: Faker::Hipster.word, user_id: Faker::Number.within(range: 0..2) )
+    Post.create(caption: Faker::Hipster.sentences(number: 1), weight: Faker::Number.within(range: 1..10), length: Faker::Number.within(range: 1..10), lure_used: Faker::Hipster.word, user_id: Faker::Number.within(range: 0..2) )
+    Post.create(caption: Faker::Hipster.sentences(number: 1), weight: Faker::Number.within(range: 1..10), length: Faker::Number.within(range: 1..10), lure_used: Faker::Hipster.word, user_id: Faker::Number.within(range: 0..2) )
+    Post.create(caption: Faker::Hipster.sentences(number: 1), weight: Faker::Number.within(range: 1..10), length: Faker::Number.within(range: 1..10), lure_used: Faker::Hipster.word, user_id: Faker::Number.within(range: 0..2) )
