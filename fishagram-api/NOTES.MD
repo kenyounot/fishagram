@@ -17,12 +17,13 @@
     * Post
         - belongs_to User
         - has_many Comments
+        - has_many Likes
         - picture
-        - description
+        - caption
         - weight(optional)
         - length(optional)
         - lure used
-        - likes
+        
 
     * Comment
         - belongs_to User

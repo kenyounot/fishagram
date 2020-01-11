@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  caption: MyText
+  weight: 1
+  length: 1
+  lure_used: MyString
+  user: one
+
+two:
+  caption: MyText
+  weight: 1
+  length: 1
+  lure_used: MyString
+  user: two
