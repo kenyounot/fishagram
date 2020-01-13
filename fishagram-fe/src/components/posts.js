@@ -1,6 +1,6 @@
 class Posts {
     constructor() {
-        this.notes = [];
+        this.posts = [];
         this.adapter = new PostsAdapter()
         // this.bindEventListeners()
         this.fetchAndLoadPosts()
@@ -8,7 +8,7 @@ class Posts {
 
     fetchAndLoadPosts() {
         this.adapter.getPosts.then(posts => {
-            console.log(posts);
+            posts.forEach(post => this.posts.push(post));
         })
         .then(() => {
             this.render()
@@ -16,6 +16,9 @@ class Posts {
     }
 
     render() {
+        const postsContainer = document.getElementById('posts-container');
+
         
+
     }
 }
