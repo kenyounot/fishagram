@@ -40,8 +40,23 @@ class Api::V1::PostsController < ApplicationController
       render json: {
         data: {
           post: @post,
-          updated: true
+          updated: false
         }
+      }
+    end
+  end
+
+  def destroy
+    @post = Post.find_by(id: params[:id])
+
+    if @post.delete 
+      render json: {
+        deleted: true
+      }
+      
+    else
+      render json: {
+        deleted: false
       }
     end
   end
