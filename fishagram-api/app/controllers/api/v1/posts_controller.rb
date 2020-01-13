@@ -32,7 +32,6 @@ class Api::V1::PostsController < ApplicationController
 
       render json: {
         data: {
-          post: @post,
           updated: true
         }
       }

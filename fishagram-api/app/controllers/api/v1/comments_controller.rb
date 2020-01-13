@@ -45,6 +45,19 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     def destroy
+        if @comment = Comment.find_by(id: params[:id])
+            @comment.delete
+
+            render json: {
+                status: :updated
+            }
+        else
+            render json: {
+                comment: @comment,
+                deleted: false,
+                errors: @comment.errors
+            }
+        end
     end
 
 
