@@ -7,4 +7,9 @@ class PostsAdapter {
         return fetch(this.baseUrl)
                 .then(res => res.json())
     }
+
+    getPostsComments(postId) {
+        return fetch(`${this.baseUrl}/${postId}/comments`)
+                .then(res => res.json())
+    }
 }
