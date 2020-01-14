@@ -12,4 +12,16 @@ class PostsAdapter {
         return fetch(`${this.baseUrl}/${postId}/comments`)
                 .then(res => res.json())
     }
+
+    createPost(params) {
+        const note = {
+            body: value
+        }
+        return fetch(this.baseUrl, {
+            method: "POST",
+            body: JSON.stringify({ note })
+        })
+    }
+
+
 }
