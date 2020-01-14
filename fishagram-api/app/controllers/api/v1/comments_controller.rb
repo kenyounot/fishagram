@@ -1,5 +1,23 @@
 class Api::V1::CommentsController < ApplicationController
 
+    def index
+        if params[:post_id]
+            if @post = Post.find_by(id: params[:post_id])
+                @comments = @post.comments
+
+                render json: {
+                    data: {
+                        comments: @comments
+                    }
+                }
+            else
+                render json: {
+                    message: "post not found"
+                }    
+            end
+        end
+    end
+
     def create
         @comment = Comment.new(comment_params)
         if @comment.save
@@ -49,7 +67,7 @@ class Api::V1::CommentsController < ApplicationController
             @comment.delete
 
             render json: {
-                status: :updated
+                deleted: true
             }
         else
             render json: {

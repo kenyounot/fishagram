@@ -3,10 +3,21 @@ class Api::V1::PostsController < ApplicationController
   def index
     @posts = Post.all
     render json: {
-      data: {
-        posts: @posts
-      }
+      data: @posts
     }
+  end
+
+  def show
+    if @post = Post.find_by(id: params[:id])
+      render json: {
+        data: @post
+      }
+    else
+      render json: {
+        message: "post not found",
+        errors: @post.errors.full_messages
+      }
+    end
   end
 
   def create
@@ -14,7 +25,10 @@ class Api::V1::PostsController < ApplicationController
 
     if @post.save
       render json: {
-        data: @post,
+        data: {
+          posts: @post,
+          comments: @post.comments
+        },
         status: :created,
         message: "created mother fucka"
       }
@@ -32,6 +46,8 @@ class Api::V1::PostsController < ApplicationController
 
       render json: {
         data: {
+          post: @post,
+          comments: @post.comments,
           updated: true
         }
       }
