@@ -24,45 +24,41 @@ class Posts {
     }
 
     createCard(data) {
-        
         const postsContainer = document.getElementById('posts-container');
-        
         const ul = document.createElement('ul');
 
 
-        img.src = "https://via.placeholder.com/250";
-
-        for(i = 0; i < data.length; i++) {
+        for(let i = 0; i < data.length; i++) {
             const article = document.createElement('article');
             const img = document.createElement('img');
+                img.src = "https://via.placeholder.com/250";
             const div = document.createElement('div');
+                div.setAttribute('class', 'postCard')
             const captionPara = document.createElement('p');
             const lengthPara = document.createElement('p');
             const weightPara = document.createElement('p');
             const lurePara = document.createElement('p');
+            const commentButton = document.createElement('button');
+                commentButton.setAttribute('class', 'comment-btn');
+                commentButton.textContent = "View Comments";
+            
+            captionPara.textContent = `Caption: ${data[i].caption}`;
+            lengthPara.textContent = `Length: ${data[i].length}`;
+            weightPara.textContent = `Weight: ${data[i].weight}`;
+            lurePara.textContent = `Lure used: ${data[i].caption}`;
 
-
-
+            article.appendChild(img);
+            article.appendChild(captionPara);
+            article.appendChild(lengthPara);
+            article.appendChild(weightPara);
+            article.appendChild(lurePara);
+            article.appendChild(commentButton);
+            div.appendChild(article);
+            postsContainer.appendChild(div);
         }
     }
 
     render() {
-        const postsContainer = document.getElementById('posts-container');
-        const article = document.createElement('article');
-        const img = document.createElement('img');
-        const div = document.createElement('div');
-        const ul = document.createElement('ul');
-
-        img.src = "https://via.placeholder.com/250";
-
-        article.appendChild(img);
-        ul.innerHTML = `<li>Caption: ${this.posts[0].caption}</li> <li>Weight: ${this.posts[0].weight}</li> <li>Length: ${this.posts[0].length}</li> <li>Lure used: ${this.posts[0].lure_used}</li>`
-        postsContainer.appendChild(article);
-        postsContainer.appendChild(ul);
-
-        
-        this.fetchAndLoadPostsComments(2);
-    
-
+        this.createCard(this.posts);
     }
 }
