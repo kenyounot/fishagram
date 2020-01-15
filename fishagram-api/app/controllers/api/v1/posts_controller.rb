@@ -1,19 +1,15 @@
 class Api::V1::PostsController < ApplicationController
-  include Rails.application.routes.url_helpers
   def index
     @posts = Post.all
   end
 
   def show
     if @post = Post.find_by(id: params[:id])
-      render json: {
-        data: @post,
-        image: url_for(@post.image)
-      }
+      render 'show'
     else
       render json: {
-        message: "post not found",
-        errors: @post.errors.full_messages
+        errors: "Post not found.",
+        status: 404
       }
     end
   end
