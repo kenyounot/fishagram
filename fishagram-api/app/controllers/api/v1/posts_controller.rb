@@ -1,5 +1,5 @@
 class Api::V1::PostsController < ApplicationController
-
+  include Rails.application.routes.url_helpers
   def index
     @posts = Post.all
     render json: {
@@ -10,7 +10,8 @@ class Api::V1::PostsController < ApplicationController
   def show
     if @post = Post.find_by(id: params[:id])
       render json: {
-        data: @post
+        data: @post,
+        image: url_for(@post.image)
       }
     else
       render json: {
