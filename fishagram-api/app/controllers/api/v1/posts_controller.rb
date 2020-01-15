@@ -21,6 +21,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
+    
     @post = Post.new(post_params)
 
     if @post.save
@@ -80,6 +81,6 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:data).permit(:caption, :weight, :length, :lure_used, :image)
+    params.permit(:image, :caption, :weight, :length, :lure_used)
   end
 end
