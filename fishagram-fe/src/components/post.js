@@ -5,8 +5,8 @@ class Post {
         this.weight = postJSON.weight;
         this.length = postJSON.length;
         this.lureUsed = postJSON.lure_used;
-        this.img_url = post.JSON.img_url
-        this.comments = this.fetchAndLoadPostsComments(postJSON.id);
+        this.img_url = postJSON.img_url
+        this.comments = postJSON.comments
         this.initBindings()
     }
 
@@ -17,11 +17,11 @@ class Post {
 
 
     renderPost() {
+        const commentUl = document.createElement('ul');
         const article = document.createElement('article');
             const img = document.createElement('img');
-                img.src = "https://via.placeholder.com/450";
             const div = document.createElement('div');
-                div.setAttribute('class', 'postCard')
+                div.setAttribute('class', 'postCard');
             const captionPara = document.createElement('p');
             const lengthPara = document.createElement('p');
             const weightPara = document.createElement('p');
@@ -33,10 +33,14 @@ class Post {
                 viewButton.setAttribute('class', 'view-comment-btn');
                 viewButton.textContent = "View Comments";
             
+            img.src = `${this.img_url}`
             captionPara.textContent = `Caption: ${this.caption}`;
             lengthPara.textContent = `Length: ${this.length}`;
             weightPara.textContent = `Weight: ${this.weight}`;
             lurePara.textContent = `Lure used: ${this.lureUsed}`;
+            commentUl.innerHTML = this.comments.map((comment) => {
+                return `<li>${comment.comment}</li>`
+            }).join('');
 
             article.appendChild(img);
             article.appendChild(captionPara);
@@ -45,15 +49,10 @@ class Post {
             article.appendChild(lurePara);
             article.appendChild(addButton);
             article.appendChild(viewButton);
+            article.appendChild(commentUl);
 
             div.appendChild(article);
             this.postsContainer.appendChild(div);
     }
 
-    fetchAndLoadPostsComments(postId) {
-        this.adapter.getPostsComments(postId)
-            .then(comments => {
-                return comments;
-            })
-    }
 }    

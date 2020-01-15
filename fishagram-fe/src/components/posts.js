@@ -37,7 +37,6 @@ class Posts {
     fetchAndLoadPosts() {
         this.adapter.getPosts.then(posts => {
             posts.data.forEach(post => this.posts.push(new Post(post)));
-            console.log(posts);
         })
         .then(() => {
             this.render()
