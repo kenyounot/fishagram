@@ -16,40 +16,33 @@ class Posts {
         this.postWeight = document.getElementById('weight');
         this.postLureUsed = document.getElementById('lure-used');
         
-
         this.postForm.addEventListener('submit', this.createPost.bind(this));
 
     }
 
     createPost(e) {
         e.preventDefault();
-        const postImgVal = this.postImage.value;
+
+        const postImgVal = this.postImage.files[0];
         const postCapVal = this.postCaption.value;
         const postLenVal = this.postLength.value;
         const postWeiVal = this.postWeight.value;
         const postLurVal = this.postLureUsed.value;
+            
+        const formValues = {image: postImgVal,caption: postCapVal,length: postLenVal,weight: postWeiVal,lure_used: postLurVal}
         
-        this.adapter.createPost(value);
-
-
+        this.adapter.createPost(formValues);
     }
 
     fetchAndLoadPosts() {
         this.adapter.getPosts.then(posts => {
             posts.data.forEach(post => this.posts.push(new Post(post)));
+            console.log(posts);
         })
         .then(() => {
             this.render()
         })
     }
-
-    fetchAndLoadPostsComments(postId) {
-        this.adapter.getPostsComments(postId)
-            .then(comments => {
-                console.log(comments)
-            })
-    }
-
 
     render() {
         this.posts.map(post => {

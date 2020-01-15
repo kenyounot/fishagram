@@ -13,13 +13,20 @@ class PostsAdapter {
                 .then(res => res.json())
     }
 
-    createPost(params) {
-        const note = {
-            body: value
-        }
+    createPost(formValues) {
+     
+        const post = new FormData();
+        post.append('image', formValues.image);
+        post.append('caption', formValues.caption);
+        post.append('weight', formValues.weight);
+        post.append('length', formValues.length);
+        post.append('lure_used', formValues.lure_used)
+
+
         return fetch(this.baseUrl, {
             method: "POST",
-            body: JSON.stringify({ note })
+            body: post
+
         })
     }
 
