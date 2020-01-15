@@ -2,9 +2,6 @@ class Api::V1::PostsController < ApplicationController
   include Rails.application.routes.url_helpers
   def index
     @posts = Post.all
-    render json: {
-      data: @posts
-    }
   end
 
   def show

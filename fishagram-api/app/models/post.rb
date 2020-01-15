@@ -1,13 +1,19 @@
+include Rails.application.routes.url_helpers
+
 class Post < ApplicationRecord
-  include Rails.application.routes.url_helpers
+  
 
 
   has_many :comments, dependent: :destroy
 
   has_one_attached :image
 
+  def say_hello
+    "#{self.lure_used} is the best lure out there"
+  end
+
   def image_url
-    url_path(self.image)
+    url_for(self.image)
   end
 
 end
