@@ -8,6 +8,8 @@ class Posts {
     }
 
     initBindingsEventListeners() {
+
+        this.postsContainer = document.getElementById('posts-container');
         this.postForm = document.getElementById('new-post-form');
 
         this.postImage = document.getElementById('image');
@@ -31,7 +33,11 @@ class Posts {
             
         const formValues = {image: postImgVal,caption: postCapVal,length: postLenVal,weight: postWeiVal,lure_used: postLurVal}
         
-        this.adapter.createPost(formValues);
+        this.adapter.createPost(formValues).then(post => {
+            this.posts.push(new Post(post.data))
+            this.render()
+        })
+            
     }
 
     fetchAndLoadPosts() {
@@ -44,6 +50,7 @@ class Posts {
     }
 
     render() {
+        this.postsContainer.innerHTML = "";
         this.posts.map(post => {
             post.renderPost()
         })

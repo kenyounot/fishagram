@@ -32,13 +32,16 @@ class Post {
             const viewButton = document.createElement('button');
                 viewButton.setAttribute('class', 'view-comment-btn');
                 viewButton.textContent = "View Comments";
+
+            
             
             img.src = `${this.img_url}`
+            img.setAttribute('class', 'post-image')
             captionPara.textContent = `Caption: ${this.caption}`;
             lengthPara.textContent = `Length: ${this.length}`;
             weightPara.textContent = `Weight: ${this.weight}`;
             lurePara.textContent = `Lure used: ${this.lureUsed}`;
-            
+
             if (this.comments){
                 commentUl.innerHTML = this.comments.map((comment) => {
                     return `<li>${comment.comment}</li>`

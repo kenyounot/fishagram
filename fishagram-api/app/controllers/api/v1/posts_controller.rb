@@ -17,20 +17,12 @@ class Api::V1::PostsController < ApplicationController
   def create
     
     @post = Post.new(post_params)
-
     if @post.save
-      render json: {
-        data: {
-          posts: @post,
-          comments: @post.comments
-        },
-        status: :created,
-        message: "created mother fucka"
-      }
+      render 'show'
     else
       render json: {
-        message: "didnt create mo fo!",
-        errors: @post.errors
+        errors: @post.errors.full_messages,
+        status: 400
       }
     end
   end

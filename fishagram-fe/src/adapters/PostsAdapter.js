@@ -26,8 +26,7 @@ class PostsAdapter {
         return fetch(this.baseUrl, {
             method: "POST",
             body: post
-
-        })
+        }).then(res => res.json());
     }
 
 
