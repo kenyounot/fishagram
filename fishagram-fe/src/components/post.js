@@ -28,6 +28,7 @@ class Post {
             const lurePara = document.createElement('p');
             const inputComment = document.createElement('input');
                 inputComment.setAttribute('id', 'comment-input')
+                inputComment.setAttribute('data-id', `${this.}`)
                 inputComment.setAttribute('type', 'text');
                 inputComment.placeholder = "Add Comment";
             

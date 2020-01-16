@@ -9,8 +9,9 @@ class Posts {
 
     initBindingsEventListeners() {
         this.postsContainer = document.getElementById('posts-container');
-        this.postForm = document.getElementById('new-post-form');
 
+        // New post form bindings
+        this.postForm = document.getElementById('new-post-form');
         this.postImage = document.getElementById('image');
         this.postCaption = document.getElementById('caption');
         this.postLength = document.getElementById('length');
@@ -18,6 +19,12 @@ class Posts {
         this.postLureUsed = document.getElementById('lure-used');
         
         this.postForm.addEventListener('submit', this.createPost.bind(this));
+
+        // New comment bindings
+        this.commentForm = document.getElementById('new-comment-form');
+        this.commentInput = document.getElementById('comment-input');
+
+        this.commentForm.addEventListener('keyup', )
     }
 
     createPost(e) {
@@ -35,6 +42,14 @@ class Posts {
             this.posts.push(new Post(post.data))
             this.render()
         })    
+    }
+
+    createComment(e) {
+        if(e.keyCode === 13) {
+            e.preventDefault();
+
+            const commentInputVal = this.commentInput.value;
+        }
     }
 
     fetchAndLoadPosts() {
