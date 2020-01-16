@@ -38,9 +38,13 @@ class Post {
             lengthPara.textContent = `Length: ${this.length}`;
             weightPara.textContent = `Weight: ${this.weight}`;
             lurePara.textContent = `Lure used: ${this.lureUsed}`;
-            commentUl.innerHTML = this.comments.map((comment) => {
-                return `<li>${comment.comment}</li>`
-            }).join('');
+            
+            if (this.comments){
+                commentUl.innerHTML = this.comments.map((comment) => {
+                    return `<li>${comment.comment}</li>`
+                }).join('');
+            }
+            
 
             article.appendChild(img);
             article.appendChild(captionPara);
