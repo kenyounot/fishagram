@@ -1,6 +1,6 @@
 
 json.data @posts do |post|
-    
+        json.id post.id
         json.caption post.caption
         json.length post.length
         json.weight post.weight

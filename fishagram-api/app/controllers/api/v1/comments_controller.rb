@@ -1,27 +1,7 @@
 class Api::V1::CommentsController < ApplicationController
-
-    def index
-        if params[:post_id]
-            if @post = Post.find_by(id: params[:post_id])
-                @comments = @post.comments
-
-                render json: {
-                    data: {
-                        comments: @comments
-                    }
-                }
-            else
-                render json: {
-                    message: "post not found"
-                }    
-            end
-        end
-    end
-
     def create
         @comment = Comment.new(comment_params)
         if @comment.save
-
             render json: {
                 data: {
                     comment: @comment,
@@ -78,11 +58,9 @@ class Api::V1::CommentsController < ApplicationController
         end
     end
 
-
-
     private
 
     def comment_params
-        params.require(:data).permit(:comment, :post_id)
+        params.permit(:comment, :post_id)
     end
 end
