@@ -1,6 +1,7 @@
 class PostsAdapter {
     constructor() {
         this.baseUrl = 'http://localhost:3000/api/v1/posts';
+        this.commentUrl = 'http://localhost:3000/api/v1/comments'
     }
 
     get getPosts() {
@@ -26,6 +27,21 @@ class PostsAdapter {
         return fetch(this.baseUrl, {
             method: "POST",
             body: post
+        }).then(res => res.json());
+    }
+
+    createComment(formValues) {
+        const comment = {
+            comment: formValues.comment,
+            post_id: formValues.post_id
+        }
+        
+        return fetch(this.commentUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(comment)
         }).then(res => res.json());
     }
 

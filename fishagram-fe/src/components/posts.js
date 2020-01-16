@@ -3,8 +3,8 @@ class Posts {
         this.posts = [];
         this.postsComments = [];
         this.adapter = new PostsAdapter()
-        this.initBindingsEventListeners()
         this.fetchAndLoadPosts()
+        this.initBindingsEventListeners()
     }
 
     initBindingsEventListeners() {
@@ -18,14 +18,8 @@ class Posts {
         this.postWeight = document.getElementById('weight');
         this.postLureUsed = document.getElementById('lure-used');
         
-        this.postForm.addEventListener('submit', this.createPost.bind(this));
-
-        // New comment bindings
-        this.commentForm = document.getElementById('new-comment-form');
-        this.commentInput = document.getElementById('comment-input');
-
-        this.commentForm.addEventListener('keyup', )
     }
+
 
     createPost(e) {
         e.preventDefault();
@@ -42,14 +36,6 @@ class Posts {
             this.posts.push(new Post(post.data))
             this.render()
         })    
-    }
-
-    createComment(e) {
-        if(e.keyCode === 13) {
-            e.preventDefault();
-
-            const commentInputVal = this.commentInput.value;
-        }
     }
 
     fetchAndLoadPosts() {
