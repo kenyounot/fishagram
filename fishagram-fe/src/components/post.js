@@ -14,7 +14,6 @@ class Post {
         this.postsContainer = document.getElementById('posts-container');
     }
 
-
     renderPost() {
         const commentUl = document.createElement('ul');
         const commentForm = document.createElement('form');
@@ -31,9 +30,6 @@ class Post {
                 inputComment.setAttribute('id', 'comment-input')
                 inputComment.setAttribute('type', 'text');
                 inputComment.placeholder = "Add Comment";
-            
-
-            
             
             img.src = `${this.img_url}`
             img.setAttribute('class', 'post-image')

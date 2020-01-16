@@ -8,7 +8,6 @@ class Posts {
     }
 
     initBindingsEventListeners() {
-
         this.postsContainer = document.getElementById('posts-container');
         this.postForm = document.getElementById('new-post-form');
 
@@ -19,7 +18,6 @@ class Posts {
         this.postLureUsed = document.getElementById('lure-used');
         
         this.postForm.addEventListener('submit', this.createPost.bind(this));
-
     }
 
     createPost(e) {
@@ -36,8 +34,7 @@ class Posts {
         this.adapter.createPost(formValues).then(post => {
             this.posts.push(new Post(post.data))
             this.render()
-        })
-            
+        })    
     }
 
     fetchAndLoadPosts() {
