@@ -37,13 +37,24 @@ class Post {
             const formValues = {comment: commentInputVal,post_id: commentId }
 
             this.adapter.createComment(formValues).then((comment) => {
-                this.comments.push(comment.data.comment);
                 
+                this.comments.push(comment.data.comment);
+
                 this.renderComments(e.target.closest('article'));
                 e.target.value = "";
             });
         }
     }
+
+    // deletePost(e) {
+    //     const postId = e.target.getAttribute('id').split('-')[2];
+
+    //     this.adapter.deletePost(postId).then((res) => {
+    //         console.log(res);
+    //     })
+        
+    // }
+
 
     deleteComment(e) {
         const commentId = e.target.getAttribute('id').split('-')[1];
@@ -75,7 +86,9 @@ class Post {
             const img = document.createElement('img');
             const deletePostBtn = document.createElement('button');
                 deletePostBtn.setAttribute('id', `post-delete-${this.postId}`);
+                deletePostBtn.setAttribute('class', 'post-delete-btn')
                 deletePostBtn.textContent = "Delete Post";
+                // deletePostBtn.addEventListener('click', this.deletePost);
             const editPostBtn = document.createElement('button');
                 editPostBtn.setAttribute('id', `post-edit-${this.postId}`);
                 editPostBtn.textContent = "Edit Post";
@@ -115,8 +128,10 @@ class Post {
     }
 
     renderComments(article) {
-        if(article.childNodes[6]) {
-            const commentUl = article.childNodes[6];
+        if(article.childNodes[8]) {
+            console.log('im here');
+            
+            const commentUl = article.childNodes[8];
             commentUl.innerHTML = "";
             for(let i = 0; i < this.comments.length; i++){
                 const li = document.createElement('li');

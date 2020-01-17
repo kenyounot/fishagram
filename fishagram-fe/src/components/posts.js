@@ -20,7 +20,16 @@ class Posts {
         
         this.postForm.addEventListener('submit', this.createPost.bind(this));
         
+    }
+
+    postDeleteListener() {
+        const btnArr = document.querySelectorAll('.post-delete-btn');
         
+        for(let i = 0; i < btnArr.length; i++) {
+            const ele = btnArr[i];
+
+            ele.addEventListener('click', this.deletePost.bind(this));
+        }
     }
 
 
@@ -43,12 +52,17 @@ class Posts {
         })    
     }
 
+    deletePost(e) {
+        console.log(e.target);
+    }
+
     fetchAndLoadPosts() {
         this.adapter.getPosts.then(posts => {
             posts.data.forEach(post => this.posts.push(new Post(post)));
         })
         .then(() => {
             this.render()
+            
         })
     }
 
@@ -57,5 +71,7 @@ class Posts {
         this.posts.map(post => {
             post.renderPost()
         })
+
+        this.postDeleteListener();
     }
 }
