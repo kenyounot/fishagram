@@ -45,7 +45,6 @@ class Posts {
         const formValues = {image: postImgVal,caption: postCapVal,length: postLenVal,weight: postWeiVal,lure_used: postLurVal}
         
         this.adapter.createPost(formValues).then(post => {
-            console.log(post.data);
             this.posts.push(new Post(post.data))
             this.postForm.reset();
             this.render()
@@ -53,7 +52,23 @@ class Posts {
     }
 
     deletePost(e) {
-        console.log(e.target);
+        const postId = e.target.getAttribute('id').split('-')[2];
+
+        this.adapter.deletePost(postId).then((res) => {
+            if(res.deleted === true){
+                console.log(this.posts);
+                for(let i = 0; i < this.posts.length; i++) {
+                    const ele = this.posts[i];            
+                    console.log(this);
+                    
+                    if(ele.postId == postId){
+                        this.posts.splice(i, 1);
+                    }
+                }
+            }
+
+            this.render();
+        })
     }
 
     fetchAndLoadPosts() {
