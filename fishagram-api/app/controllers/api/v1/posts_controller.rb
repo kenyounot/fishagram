@@ -51,7 +51,7 @@ class Api::V1::PostsController < ApplicationController
   def destroy
     @post = Post.find_by(id: params[:id])
 
-    if @post.delete 
+    if @post.destroy
       render json: {
         deleted: true
       }

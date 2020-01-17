@@ -45,5 +45,11 @@ class PostsAdapter {
         }).then(res => res.json());
     }
 
+    deleteComment(commentId) {
+        return fetch(`${this.commentUrl}/${commentId}`, {
+            method: "DELETE"
+        }).then(res => res.json());
+    }
+
 
 }

@@ -1,4 +1,5 @@
 json.data do
+    json.id @post.id
     json.caption @post.caption
     json.weight @post.weight
     json.length @post.length

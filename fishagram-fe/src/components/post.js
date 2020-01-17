@@ -7,7 +7,7 @@ class Post {
         this.length = postJSON.length;
         this.lureUsed = postJSON.lure_used;
         this.imgUrl = postJSON.img_url
-        this.comments = postJSON.comments
+        this.comments = postJSON.comments || [];
         this.initBindings()
     }
 
@@ -15,6 +15,17 @@ class Post {
     addCommentEventListener() {
         this.commentInput = document.getElementById(`${this.postId}`);
         this.commentInput.addEventListener('keyup', this.createComment.bind(this));
+    }
+
+
+
+    deleteCommentEventListener() {
+        let btnArr = document.querySelectorAll('.delete-btn');
+
+        for(let i = 0; i < btnArr.length; i++){
+            const ele = btnArr[i];
+            ele.addEventListener('click', this.deleteComment.bind(this));
+        }
     }
 
     createComment(e) {
@@ -26,11 +37,32 @@ class Post {
             const formValues = {comment: commentInputVal,post_id: commentId }
 
             this.adapter.createComment(formValues).then((comment) => {
+                
                 this.comments.push(comment.data.comment);
+
                 this.renderComments(e.target.closest('article'));
                 e.target.value = "";
             });
         }
+    }
+
+    deleteComment(e) {
+        const commentId = e.target.getAttribute('id').split('-')[1];
+        const article = e.target.closest('article');
+
+        this.adapter.deleteComment(commentId).then((res) => {
+            if(res.deleted === true){
+                for(let i = 0; i < this.comments.length; i++) {
+                    const ele = this.comments[i];            
+                    
+                    if(ele.id == commentId){
+                        this.comments.splice(i, 1);
+                    }
+                }
+            }
+
+            this.renderComments(article);
+        })
     }
 
     initBindings() {
@@ -38,7 +70,7 @@ class Post {
     }
 
     renderPost() {
-        // const commentUl = document.createElement('ul');
+    
         const article = document.createElement('article');
             article.setAttribute('data-id', `${this.postId}`);
             const img = document.createElement('img');
@@ -61,13 +93,6 @@ class Post {
             weightPara.textContent = `Weight: ${this.weight}`;
             lurePara.textContent = `Lure used: ${this.lureUsed}`;
 
-            // if (this.comments){
-            //     commentUl.innerHTML = this.comments.map((comment) => {
-            //         return `<li>${comment.comment}</li>`
-            //     }).join('');
-            // }
-            
-
             article.appendChild(img);
             article.appendChild(captionPara);
             article.appendChild(lengthPara);
@@ -83,27 +108,42 @@ class Post {
     }
 
     renderComments(article) {
-        console.log(this.comments)
         if(article.childNodes[6]) {
             const commentUl = article.childNodes[6];
+            commentUl.innerHTML = "";
+            for(let i = 0; i < this.comments.length; i++){
+                const li = document.createElement('li');
+                    li.textContent = `${this.comments[i].comment}`;
+                const button = document.createElement('button');
+                    button.setAttribute('id', `btn-${this.comments[i].id}`)
+                    button.setAttribute('class', 'delete-btn');
+                    button.textContent = "delete";
 
-            if (this.comments){
-                commentUl.innerHTML = this.comments.map((comment) => {
-                    return `<li>${comment.comment}</li>`
-                }).join('');
+                commentUl.appendChild(li);
+                commentUl.appendChild(button);
             }
+           
             article.appendChild(commentUl);
             this.postsContainer.appendChild(article);
+            this.deleteCommentEventListener();
         }else {
             const commentUl = document.createElement('ul');
-
-            if (this.comments){
-                commentUl.innerHTML = this.comments.map((comment) => {
-                    return `<li>${comment.comment}</li> <button id="${comment.id}">delete</button>`
-                }).join('');
-            }
+                for(let i = 0; i < this.comments.length; i++){
+                    const li = document.createElement('li');
+                        li.textContent = `${this.comments[i].comment}`;
+                    const button = document.createElement('button');
+                        button.setAttribute('id', `btn-${this.comments[i].id}`)
+                        button.setAttribute('class', 'delete-btn')
+                        button.textContent = "delete";
+                        
+                    commentUl.appendChild(li);
+                    commentUl.appendChild(button);
+                    
+                }
+       
             article.appendChild(commentUl);
             this.postsContainer.appendChild(article);
+            this.deleteCommentEventListener();
         }
     }
 

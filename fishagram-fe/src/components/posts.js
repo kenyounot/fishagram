@@ -16,6 +16,10 @@ class Posts {
         this.postLength = document.getElementById('length');
         this.postWeight = document.getElementById('weight');
         this.postLureUsed = document.getElementById('lure-used');
+        this.resetButton = document.getElementById('reset');
+        
+        this.postForm.addEventListener('submit', this.createPost.bind(this));
+        
         
     }
 
@@ -32,7 +36,9 @@ class Posts {
         const formValues = {image: postImgVal,caption: postCapVal,length: postLenVal,weight: postWeiVal,lure_used: postLurVal}
         
         this.adapter.createPost(formValues).then(post => {
+            console.log(post.data);
             this.posts.push(new Post(post.data))
+            this.postForm.reset();
             this.render()
         })    
     }
