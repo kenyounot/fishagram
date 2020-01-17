@@ -14,8 +14,6 @@ class Post {
 
     addCommentEventListener() {
         this.commentInput = document.getElementById(`${this.postId}`);
-        
-        console.log(this.commentInput);
         this.commentInput.addEventListener('keyup', this.createComment.bind(this));
     }
 
@@ -23,14 +21,15 @@ class Post {
         if(e.keyCode === 13) {
             e.preventDefault();
             const commentId = this.commentInput.getAttribute('data-id');
-            console.log(commentId)
-            const commentInputVal = this.commentInput.value;
-            console.log(commentInputVal);
-            
-
+            let commentInputVal = this.commentInput.value;
+           
             const formValues = {comment: commentInputVal,post_id: commentId }
 
-            this.adapter.createComment(formValues);
+            this.adapter.createComment(formValues).then((comment) => {
+                this.comments.push(comment.data.comment);
+                this.renderComments(e.target.closest('article'));
+                e.target.value = "";
+            });
         }
     }
 
@@ -39,8 +38,9 @@ class Post {
     }
 
     renderPost() {
-        const commentUl = document.createElement('ul');
+        // const commentUl = document.createElement('ul');
         const article = document.createElement('article');
+            article.setAttribute('data-id', `${this.postId}`);
             const img = document.createElement('img');
             const div = document.createElement('div');
                 div.setAttribute('class', 'postCard');
@@ -61,11 +61,11 @@ class Post {
             weightPara.textContent = `Weight: ${this.weight}`;
             lurePara.textContent = `Lure used: ${this.lureUsed}`;
 
-            if (this.comments){
-                commentUl.innerHTML = this.comments.map((comment) => {
-                    return `<li>${comment.comment}</li>`
-                }).join('');
-            }
+            // if (this.comments){
+            //     commentUl.innerHTML = this.comments.map((comment) => {
+            //         return `<li>${comment.comment}</li>`
+            //     }).join('');
+            // }
             
 
             article.appendChild(img);
@@ -74,11 +74,36 @@ class Post {
             article.appendChild(weightPara);
             article.appendChild(lurePara);
             article.appendChild(inputComment);
-            article.appendChild(commentUl);
+            // article.appendChild(commentUl);
 
             div.appendChild(article);
             this.postsContainer.appendChild(div);
+            this.renderComments(article);
             this.addCommentEventListener();
+    }
+
+    renderComments(article) {
+        if(article.childNodes[6]) {
+            const commentUl = article.childNodes[6];
+
+            if (this.comments){
+                commentUl.innerHTML = this.comments.map((comment) => {
+                    return `<li>${comment.comment}</li>`
+                }).join('');
+            }
+            article.appendChild(commentUl);
+            this.postsContainer.appendChild(article);
+        }else {
+            const commentUl = document.createElement('ul');
+
+            if (this.comments){
+                commentUl.innerHTML = this.comments.map((comment) => {
+                    return `<li>${comment.comment}</li>`
+                }).join('');
+            }
+            article.appendChild(commentUl);
+            this.postsContainer.appendChild(article);
+        }
     }
 
 }    
