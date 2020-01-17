@@ -37,9 +37,8 @@ class Post {
             const formValues = {comment: commentInputVal,post_id: commentId }
 
             this.adapter.createComment(formValues).then((comment) => {
-                
                 this.comments.push(comment.data.comment);
-
+                
                 this.renderComments(e.target.closest('article'));
                 e.target.value = "";
             });
@@ -74,6 +73,12 @@ class Post {
         const article = document.createElement('article');
             article.setAttribute('data-id', `${this.postId}`);
             const img = document.createElement('img');
+            const deletePostBtn = document.createElement('button');
+                deletePostBtn.setAttribute('id', `post-delete-${this.postId}`);
+                deletePostBtn.textContent = "Delete Post";
+            const editPostBtn = document.createElement('button');
+                editPostBtn.setAttribute('id', `post-edit-${this.postId}`);
+                editPostBtn.textContent = "Edit Post";
             const div = document.createElement('div');
                 div.setAttribute('class', 'postCard');
             const captionPara = document.createElement('p');
@@ -94,12 +99,14 @@ class Post {
             lurePara.textContent = `Lure used: ${this.lureUsed}`;
 
             article.appendChild(img);
+            article.appendChild(deletePostBtn);
+            article.appendChild(editPostBtn);
             article.appendChild(captionPara);
             article.appendChild(lengthPara);
             article.appendChild(weightPara);
             article.appendChild(lurePara);
             article.appendChild(inputComment);
-            // article.appendChild(commentUl);
+            
 
             div.appendChild(article);
             this.postsContainer.appendChild(div);
