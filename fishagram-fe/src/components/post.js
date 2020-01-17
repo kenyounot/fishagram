@@ -83,6 +83,7 @@ class Post {
     }
 
     renderComments(article) {
+        console.log(this.comments)
         if(article.childNodes[6]) {
             const commentUl = article.childNodes[6];
 
@@ -98,7 +99,7 @@ class Post {
 
             if (this.comments){
                 commentUl.innerHTML = this.comments.map((comment) => {
-                    return `<li>${comment.comment}</li>`
+                    return `<li>${comment.comment}</li> <button id="${comment.id}">delete</button>`
                 }).join('');
             }
             article.appendChild(commentUl);
