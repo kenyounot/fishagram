@@ -30,6 +30,24 @@ class PostsAdapter {
         }).then(res => res.json());
     }
 
+    editPost(pValues, postId) {
+        const post = {
+            caption: pValues.caption,
+            length: pValues.length,
+            weight: pValues.weight,
+            lure_used: pValues.lure_used
+        }
+
+
+        return fetch(`${this.baseUrl}/${postId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(post)
+        }).then(res => res.json());
+    }
+
     createComment(formValues) {
         const comment = {
             comment: formValues.comment,

@@ -46,16 +46,6 @@ class Post {
         }
     }
 
-    // deletePost(e) {
-    //     const postId = e.target.getAttribute('id').split('-')[2];
-
-    //     this.adapter.deletePost(postId).then((res) => {
-    //         console.log(res);
-    //     })
-        
-    // }
-
-
     deleteComment(e) {
         const commentId = e.target.getAttribute('id').split('-')[1];
         const article = e.target.closest('article');
@@ -88,16 +78,17 @@ class Post {
                 deletePostBtn.setAttribute('id', `post-delete-${this.postId}`);
                 deletePostBtn.setAttribute('class', 'post-delete-btn')
                 deletePostBtn.textContent = "Delete Post";
-                // deletePostBtn.addEventListener('click', this.deletePost);
-            const editPostBtn = document.createElement('button');
-                editPostBtn.setAttribute('id', `post-edit-${this.postId}`);
-                editPostBtn.textContent = "Edit Post";
+        
             const div = document.createElement('div');
                 div.setAttribute('class', 'postCard');
             const captionPara = document.createElement('p');
+                captionPara.classList.add('caption-p')
             const lengthPara = document.createElement('p');
+                lengthPara.classList.add('length-p');
             const weightPara = document.createElement('p');
+                weightPara.classList.add('weight-p');
             const lurePara = document.createElement('p');
+                lurePara.classList.add('lure-p');
             const inputComment = document.createElement('input');
                 inputComment.setAttribute('id', `${this.postId}`)
                 inputComment.setAttribute('data-id', `${this.postId}`)
@@ -113,14 +104,12 @@ class Post {
 
             article.appendChild(img);
             article.appendChild(deletePostBtn);
-            article.appendChild(editPostBtn);
             article.appendChild(captionPara);
             article.appendChild(lengthPara);
             article.appendChild(weightPara);
             article.appendChild(lurePara);
             article.appendChild(inputComment);
             
-
             div.appendChild(article);
             this.postsContainer.appendChild(div);
             this.renderComments(article);
@@ -128,10 +117,8 @@ class Post {
     }
 
     renderComments(article) {
-        if(article.childNodes[8]) {
-            console.log('im here');
-            
-            const commentUl = article.childNodes[8];
+        if(article.childNodes[7]) {
+            const commentUl = article.childNodes[7];
             commentUl.innerHTML = "";
             for(let i = 0; i < this.comments.length; i++){
                 const li = document.createElement('li');
@@ -144,7 +131,6 @@ class Post {
                 commentUl.appendChild(li);
                 commentUl.appendChild(button);
             }
-           
             article.appendChild(commentUl);
             this.postsContainer.appendChild(article);
             this.deleteCommentEventListener();
@@ -160,11 +146,11 @@ class Post {
                         
                     commentUl.appendChild(li);
                     commentUl.appendChild(button);
-                    
                 }
        
             article.appendChild(commentUl);
             this.postsContainer.appendChild(article);
+            
             this.deleteCommentEventListener();
         }
     }

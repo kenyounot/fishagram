@@ -4,10 +4,13 @@ class Posts {
         this.adapter = new PostsAdapter()
         this.fetchAndLoadPosts()
         this.initBindingsEventListeners()
+        this.postBlurListener();
+
     }
 
     initBindingsEventListeners() {
         this.postsContainer = document.getElementById('posts-container');
+        this.body = document.querySelector('body');
 
         // New post form bindings
         this.postForm = document.getElementById('new-post-form');
@@ -19,6 +22,7 @@ class Posts {
         this.resetButton = document.getElementById('reset');
         
         this.postForm.addEventListener('submit', this.createPost.bind(this));
+
         
     }
 
@@ -32,7 +36,26 @@ class Posts {
         }
     }
 
+    postEditListener() {
+        const pArr = document.querySelectorAll('p');
+        
+        for(let i = 0; i < pArr.length; i++) {
+            const ele = pArr[i];
 
+            ele.addEventListener('click', (e) => {
+                const p = e.target;
+                
+                p.contentEditable = true;
+                p.focus();
+            });
+        }
+    }
+
+    postBlurListener() {
+        this.body.addEventListener('blur', this.editPost.bind(this), true)
+    }
+
+        
     createPost(e) {
         e.preventDefault();
 
@@ -66,9 +89,30 @@ class Posts {
                     }
                 }
             }
-
             this.render();
         })
+    }
+
+    editPost(e) {
+        if(e.target.tagName === 'P') {
+            const article = e.target.closest('article');
+            const postId = article.getAttribute('data-id');
+            const captionP = this.getParTextContent(article.querySelector('.caption-p'));
+            const lengthP = this.getParTextContent(article.querySelector('.length-p'));
+            const weightP = this.getParTextContent(article.querySelector('.weight-p'));
+            const lureP = this.getParTextContent(article.querySelector('.lure-p'))
+
+            const pValues = {caption: captionP, length: lengthP, weight: weightP, lure_used: lureP};
+
+            this.adapter.editPost(pValues, postId).then((res) => {
+                console.log(res);
+            })
+        }
+          
+    }
+
+    getParTextContent(targetP) {
+        return targetP.textContent.split(':')[1].trim();
     }
 
     fetchAndLoadPosts() {
@@ -88,5 +132,6 @@ class Posts {
         })
 
         this.postDeleteListener();
+        this.postEditListener();
     }
 }
