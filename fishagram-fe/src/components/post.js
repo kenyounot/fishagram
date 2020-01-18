@@ -9,6 +9,7 @@ class Post {
         this.imgUrl = postJSON.img_url
         this.comments = postJSON.comments || [];
         this.initBindings()
+        this.deleteCommentEventListener();
     }
 
 
@@ -110,6 +111,7 @@ class Post {
             article.appendChild(lurePara);
             article.appendChild(inputComment);
             
+
             div.appendChild(article);
             this.postsContainer.appendChild(div);
             this.renderComments(article);
@@ -127,13 +129,14 @@ class Post {
                     button.setAttribute('id', `btn-${this.comments[i].id}`)
                     button.setAttribute('class', 'delete-btn');
                     button.textContent = "delete";
+                    button.addEventListener('click', this.deleteComment.bind(this));
 
                 commentUl.appendChild(li);
                 commentUl.appendChild(button);
             }
             article.appendChild(commentUl);
             this.postsContainer.appendChild(article);
-            this.deleteCommentEventListener();
+
         }else {
             const commentUl = document.createElement('ul');
                 for(let i = 0; i < this.comments.length; i++){
@@ -143,6 +146,7 @@ class Post {
                         button.setAttribute('id', `btn-${this.comments[i].id}`)
                         button.setAttribute('class', 'delete-btn')
                         button.textContent = "delete";
+                        button.addEventListener('click', this.deleteComment.bind(this));
                         
                     commentUl.appendChild(li);
                     commentUl.appendChild(button);
@@ -150,8 +154,7 @@ class Post {
        
             article.appendChild(commentUl);
             this.postsContainer.appendChild(article);
-            
-            this.deleteCommentEventListener();
+       
         }
     }
 
