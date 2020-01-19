@@ -71,9 +71,13 @@ class Posts {
 		};
 
 		this.adapter.createPost(formValues).then(post => {
-			this.posts.push(new Post(post.data));
-			this.postForm.reset();
-			this.render();
+			if (post.errors) {
+				alert(`Failed to create post: ${post.errors}`);
+			} else {
+				this.posts.push(new Post(post.data));
+				this.postForm.reset();
+				this.render();
+			}
 		});
 	}
 
@@ -110,7 +114,12 @@ class Posts {
 				lure_used: lureP
 			};
 
-			this.adapter.editPost(pValues, postId);
+			this.adapter.editPost(pValues, postId).then(res => {
+				if (res.errors) {
+					alert(`Post couldn't be updated: ${res.errors}`);
+					this.render();
+				}
+			});
 		}
 	}
 	// Helpers
