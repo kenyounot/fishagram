@@ -4,11 +4,9 @@ class Posts {
 		this.adapter = new PostsAdapter();
 		this.fetchAndLoadPosts();
 		this.initBindingsEventListeners();
-		this.postBlurListener();
 	}
 
 	// Listeners
-
 	initBindingsEventListeners() {
 		this.postsContainer = document.getElementById('posts-container');
 		this.body = document.querySelector('body');
@@ -22,6 +20,7 @@ class Posts {
 		this.resetButton = document.getElementById('reset');
 
 		this.postForm.addEventListener('submit', this.createPost.bind(this));
+		this.postBlurListener();
 	}
 
 	postDeleteListener() {
@@ -53,6 +52,7 @@ class Posts {
 		this.body.addEventListener('blur', this.editPost.bind(this), true);
 	}
 
+	// Crud Methods
 	createPost(e) {
 		e.preventDefault();
 
@@ -82,13 +82,7 @@ class Posts {
 
 		this.adapter.deletePost(postId).then(res => {
 			if (res.deleted === true) {
-				for (let i = 0; i < this.posts.length; i++) {
-					const ele = this.posts[i];
-
-					if (ele.postId == postId) {
-						this.posts.splice(i, 1);
-					}
-				}
+				this.deletePostAfterIdCheck(postId);
 			}
 			this.render();
 		});
@@ -119,11 +113,21 @@ class Posts {
 			this.adapter.editPost(pValues, postId);
 		}
 	}
-
+	// Helpers
 	static getParTextContent(targetP) {
 		return targetP.textContent.split(':')[1].trim();
 	}
 
+	deletePostAfterIdCheck(postId) {
+		for (let i = 0; i < this.posts.length; i++) {
+			const ele = this.posts[i];
+			if (ele.postId == postId) {
+				this.posts.splice(i, 1);
+			}
+		}
+	}
+
+	// Render Methods
 	fetchAndLoadPosts() {
 		this.adapter
 			.getPosts()
