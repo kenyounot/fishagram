@@ -1,48 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/style.css">
-    <title>Fishagram</title>
-</head>
-<body>
-    
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" href="styles/style.css" />
+		<title>Fishagram</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Welcome to Fishagram!</h1>
 
-    <div class="container">
-        <h1>Welcome to Fishagram!</h1>
+			<div class="post-form">
+				<form enctype="multipart/form-data" id="new-post-form" action="">
+					<label for="image">Add image</label>
+					<input type="file" accept="image/*" name="image" id="image" /><br />
 
-        <div class="post-form">
-            <form enctype="multipart/form-data" id="new-post-form" action="">
-                <label for="image">Add image</label>
-                <input type="file" accept="image/*" name="image" id="image"><br>
+					<label for="caption">Image caption</label>
+					<input id="caption" type="text" /><br />
 
-                <label for="caption">Image caption</label>
-                <input id="caption" type="text"><br>
+					<label for="weight">Weight of catch</label>
+					<input id="weight" type="text" /><br />
 
-                <label for="weight">Weight of catch</label>
-                <input id="weight" type="text"><br>
+					<label for="length">Length of catch</label>
+					<input id="length" type="text" /><br />
 
-                <label for="length">Length of catch</label>
-                <input id="length" type="text"><br>
+					<label for="lure-used">Lure used</label>
+					<input id="lure-used" type="text" /><br />
 
-                <label for="lure-used">Lure used</label>
-                <input id="lure-used" type="text"><br>
+					<input type="submit" />
+				</form>
+			</div>
 
-                <input type="submit">
-            </form>
-        </div>
+			<div id="posts-container" class="flex-container"></div>
+		</div>
 
-        <div id="posts-container" class="grid">
-        </div>        
-    </div>
-
-    
-    <script src="src/adapters/PostsAdapter.js"></script>
-    <script src="src/components/app.js"></script>
-    <script src="src/components/post.js"></script>
-    <script src="src/components/posts.js"></script>
-    <script src="src/index.js"></script>
-</body>
+		<script src="src/adapters/PostsAdapter.js"></script>
+		<script src="src/components/app.js"></script>
+		<script src="src/components/post.js"></script>
+		<script src="src/components/posts.js"></script>
+		<script src="src/index.js"></script>
+	</body>
 </html>
