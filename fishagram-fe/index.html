@@ -9,30 +9,37 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1>Welcome to Fishagram!</h1>
+			<h1>Welcome to Fishagram</h1>
 
-			<div class="post-form">
+			<div class="post-form form-style-2">
+				<div class="form-style-2-heading">Create a new gram</div>
 				<form enctype="multipart/form-data" id="new-post-form" action="">
 					<label for="image">Add image</label>
-					<input type="file" accept="image/*" name="image" id="image" /><br />
+					<input
+						class="input-field"
+						type="file"
+						accept="image/*"
+						name="image"
+						id="image"
+					/><br />
 
 					<label for="caption">Image caption</label>
-					<input id="caption" type="text" /><br />
+					<input class="input-field" id="caption" type="text" /><br />
 
 					<label for="weight">Weight of catch</label>
-					<input id="weight" type="text" /><br />
+					<input class="input-field" id="weight" type="text" /><br />
 
 					<label for="length">Length of catch</label>
-					<input id="length" type="text" /><br />
+					<input class="input-field" id="length" type="text" /><br />
 
 					<label for="lure-used">Lure used</label>
-					<input id="lure-used" type="text" /><br />
+					<input class="input-field" id="lure-used" type="text" /><br />
 
 					<input type="submit" />
 				</form>
 			</div>
 
-			<div id="posts-container" class="flex-container"></div>
+			<div id="posts-container" class="cards"></div>
 		</div>
 
 		<script src="src/adapters/PostsAdapter.js"></script>

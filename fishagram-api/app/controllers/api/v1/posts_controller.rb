@@ -18,7 +18,6 @@ class Api::V1::PostsController < ApplicationController
   def update
     if @post = Post.find_by(id: params[:id])
         if @post.update(post_params)
-
           render json: {
             data: {
               post: @post,
@@ -45,11 +44,11 @@ class Api::V1::PostsController < ApplicationController
       
     else
       render json: {
+        errors: @post.errors.full_messages,
         deleted: false
       }
     end
   end
-
 
   private
 

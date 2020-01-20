@@ -12,7 +12,7 @@ class Api::V1::CommentsController < ApplicationController
             render json: {
                 data: {
                     created: false,
-                    errors: @comment.errors
+                    errors: @comment.errors.full_messages
                 }
             }
         end
@@ -37,23 +37,27 @@ class Api::V1::CommentsController < ApplicationController
         else
             render json: {
                 updated: false,
-                errors: @comment.errors
+                errors: 'Comment not found'
             }
         end
     end
 
     def destroy
         if @comment = Comment.find_by(id: params[:id])
-            @comment.delete
-
-            render json: {
-                deleted: true
-            }
+            if @comment.delete
+                render json: {
+                    deleted: true
+                }
+            else
+                render json: {
+                    errors: @comment.errors.full_messages,
+                    deleted: false
+                }
+            end
         else
             render json: {
-                comment: @comment,
                 deleted: false,
-                errors: @comment.errors
+                errors: 'Comment not found'
             }
         end
     end

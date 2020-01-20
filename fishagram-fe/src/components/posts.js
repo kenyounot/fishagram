@@ -87,6 +87,8 @@ class Posts {
 		this.adapter.deletePost(postId).then(res => {
 			if (res.deleted === true) {
 				this.deletePostAfterIdCheck(postId);
+			} else {
+				alert(`Post wasn't deleted: ${res.errors}`);
 			}
 			this.render();
 		});

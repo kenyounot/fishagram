@@ -40,39 +40,42 @@ class Post {
 			const formValues = { comment: commentInputVal, post_id: commentId };
 
 			this.adapter.createComment(formValues).then(comment => {
-				this.pushAndRenderComments(e, comment);
+				if (comment.data.errors) {
+					alert(`Comment not created: ${comment.data.errors}`);
+				} else {
+					this.pushAndRenderComments(e, comment);
+				}
 			});
 		}
 	}
 
 	deleteComment(e) {
 		const commentId = e.target.getAttribute('id').split('-')[1];
-		const article = e.target.closest('article');
+		const div = e.target.closest('div');
 
 		this.adapter.deleteComment(commentId).then(res => {
 			if (res.deleted === true) {
 				this.deleteCommentAfterIdCheck(commentId);
 			}
 
-			this.renderComments(article);
+			this.renderComments(div);
 		});
 	}
 
 	// Helpers
-	createAndAppendComments(commentUl, article, i) {
+	createAndAppendComments(commentUl, div, i) {
 		const li = document.createElement('li');
 		li.textContent = `${this.comments[i].comment}`;
 		const button = document.createElement('button');
 		button.setAttribute('id', `btn-${this.comments[i].id}`);
 		button.setAttribute('class', 'delete-btn');
-		button.textContent = 'delete';
+		button.textContent = 'x';
 		button.addEventListener('click', this.deleteComment.bind(this));
-
+		li.appendChild(button);
 		commentUl.append(li);
-		commentUl.append(button);
 
-		article.appendChild(commentUl);
-		this.postsContainer.appendChild(article);
+		div.appendChild(commentUl);
+		this.postsContainer.appendChild(div);
 	}
 
 	deleteCommentAfterIdCheck(commentId) {
@@ -85,72 +88,112 @@ class Post {
 		}
 	}
 
+	commentLoopAndCreate(commentUl, div) {
+		for (let i = 0; i < this.comments.length; i++) {
+			this.createAndAppendComments(commentUl, div, i);
+		}
+	}
+
+	ifUlExists(div) {
+		let ulIndex = 0;
+
+		for (let index = 0; index < div.childNodes.length; index++) {
+			const element = div.childNodes[index];
+
+			if (element.tagName == 'UL') {
+				ulIndex = index;
+			}
+		}
+		return ulIndex;
+	}
+
 	// Render Methods
 	renderPost() {
 		const article = document.createElement('article');
 		article.setAttribute('data-id', `${this.postId}`);
+		article.setAttribute('class', 'cards__item');
+
+		const mainDiv = document.createElement('div');
+		mainDiv.setAttribute('class', 'card');
+
+		const contentDiv = document.createElement('div');
+		contentDiv.setAttribute('class', 'card__content');
+
+		const imageDiv = document.createElement('div');
+		imageDiv.setAttribute('class', 'card__image');
+
 		const img = document.createElement('img');
 		img.src = `${this.imgUrl}`;
-		img.setAttribute('class', 'post-image');
+
 		const deletePostBtn = document.createElement('button');
 		deletePostBtn.setAttribute('id', `post-delete-${this.postId}`);
-		deletePostBtn.setAttribute('class', 'post-delete-btn');
+		deletePostBtn.setAttribute('class', 'post-delete-btn btn btn--block');
 		deletePostBtn.textContent = 'Delete Post';
-		const div = document.createElement('div');
-		div.setAttribute('class', 'postCard');
+
 		const captionPara = document.createElement('p');
 		captionPara.classList.add('caption-p');
 		captionPara.textContent = `Caption: ${this.caption}`;
+		captionPara.setAttribute('class', 'card__title');
+
 		const lengthPara = document.createElement('p');
 		lengthPara.classList.add('length-p');
 		lengthPara.textContent = `Length: ${this.length}`;
+		lengthPara.setAttribute('class', 'card__text');
+
 		const weightPara = document.createElement('p');
 		weightPara.classList.add('weight-p');
 		weightPara.textContent = `Weight: ${this.weight}`;
+		weightPara.setAttribute('class', 'card__text');
+
 		const lurePara = document.createElement('p');
 		lurePara.classList.add('lure-p');
 		lurePara.textContent = `Lure used: ${this.lureUsed}`;
+		lurePara.setAttribute('class', 'card__text');
+
 		const inputComment = document.createElement('input');
 		inputComment.setAttribute('id', `${this.postId}`);
 		inputComment.setAttribute('data-id', `${this.postId}`);
+		inputComment.setAttribute('class', 'comment-input');
 		inputComment.setAttribute('type', 'text');
 		inputComment.placeholder = 'Add Comment';
 
-		article.appendChild(img);
-		article.appendChild(deletePostBtn);
-		article.appendChild(captionPara);
-		article.appendChild(lengthPara);
-		article.appendChild(weightPara);
-		article.appendChild(lurePara);
-		article.appendChild(inputComment);
+		const hr = document.createElement('hr');
 
-		div.appendChild(article);
-		this.postsContainer.appendChild(div);
-		this.renderComments(article);
+		imageDiv.appendChild(img);
+		mainDiv.appendChild(imageDiv);
+
+		mainDiv.appendChild(captionPara);
+		mainDiv.appendChild(lengthPara);
+		mainDiv.appendChild(weightPara);
+		mainDiv.appendChild(lurePara);
+		mainDiv.appendChild(deletePostBtn);
+		mainDiv.appendChild(inputComment);
+		mainDiv.appendChild(hr);
+
+		article.appendChild(mainDiv);
+		this.postsContainer.appendChild(article);
+		this.renderComments(mainDiv);
 		this.addCommentEventListener();
 	}
 
 	pushAndRenderComments(event, comment) {
 		this.comments.push(comment.data.comment);
 
-		this.renderComments(event.target.closest('article'));
+		this.renderComments(event.target.closest('div'));
 		event.target.value = '';
 	}
 
-	renderComments(article) {
-		if (article.childNodes[7]) {
-			const commentUl = article.childNodes[7];
+	renderComments(div) {
+		if (this.ifUlExists(div)) {
+			let index = this.ifUlExists(div);
+			const commentUl = div.childNodes[`${index}`];
 			commentUl.innerHTML = '';
 
-			for (let i = 0; i < this.comments.length; i++) {
-				this.createAndAppendComments(commentUl, article, i);
-			}
+			this.commentLoopAndCreate(commentUl, div);
 		} else {
 			const commentUl = document.createElement('ul');
 
-			for (let i = 0; i < this.comments.length; i++) {
-				this.createAndAppendComments(commentUl, article, i);
-			}
+			this.commentLoopAndCreate(commentUl, div);
 		}
 	}
 }
