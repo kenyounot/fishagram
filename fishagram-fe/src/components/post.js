@@ -131,24 +131,22 @@ class Post {
 		deletePostBtn.textContent = 'Delete Post';
 
 		const captionPara = document.createElement('p');
-		captionPara.classList.add('caption-p');
-		captionPara.textContent = `Caption: ${this.caption}`;
-		captionPara.setAttribute('class', 'card__title');
+		captionPara.textContent = `Captions: ${this.caption}`;
+		captionPara.setAttribute('class', 'card__title caption-p');
 
 		const lengthPara = document.createElement('p');
-		lengthPara.classList.add('length-p');
 		lengthPara.textContent = `Length: ${this.length}`;
-		lengthPara.setAttribute('class', 'card__text');
+		lengthPara.setAttribute('class', 'card__text length-p');
 
 		const weightPara = document.createElement('p');
 		weightPara.classList.add('weight-p');
 		weightPara.textContent = `Weight: ${this.weight}`;
-		weightPara.setAttribute('class', 'card__text');
+		weightPara.setAttribute('class', 'card__text weight-p');
 
 		const lurePara = document.createElement('p');
 		lurePara.classList.add('lure-p');
 		lurePara.textContent = `Lure used: ${this.lureUsed}`;
-		lurePara.setAttribute('class', 'card__text');
+		lurePara.setAttribute('class', 'card__text lure-p');
 
 		const inputComment = document.createElement('input');
 		inputComment.setAttribute('id', `${this.postId}`);

@@ -49,6 +49,8 @@ class Posts {
 	}
 
 	postBlurListener() {
+		console.log('updating');
+
 		this.body.addEventListener('blur', this.editPost.bind(this), true);
 	}
 
@@ -96,17 +98,14 @@ class Posts {
 
 	editPost(e) {
 		if (e.target.tagName === 'P') {
+			console.log(e.target);
+			console.log(e.target.closest('article'));
+
 			const article = e.target.closest('article');
 			const postId = article.getAttribute('data-id');
-			const captionP = Posts.getParTextContent(
-				article.querySelector('.caption-p')
-			);
-			const lengthP = Posts.getParTextContent(
-				article.querySelector('.length-p')
-			);
-			const weightP = Posts.getParTextContent(
-				article.querySelector('.weight-p')
-			);
+			const captionP = Posts.getParTextContent(article.querySelector('.caption-p'));
+			const lengthP = Posts.getParTextContent(article.querySelector('.length-p'));
+			const weightP = Posts.getParTextContent(article.querySelector('.weight-p'));
 			const lureP = Posts.getParTextContent(article.querySelector('.lure-p'));
 
 			const pValues = {
@@ -126,6 +125,8 @@ class Posts {
 	}
 	// Helpers
 	static getParTextContent(targetP) {
+		console.log(`target to get text from is ${targetP}`);
+
 		return targetP.textContent.split(':')[1].trim();
 	}
 
