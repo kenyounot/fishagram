@@ -18,30 +18,7 @@ class Api::V1::CommentsController < ApplicationController
         end
     end
 
-    def update
-        if @comment = Comment.find_by(id: params[:id])
-            if @comment.update(comment_params)
-                render json: {
-                    comment: @comment,
-                    updated: true
-                }
-
-            else
-                render json: {
-                    comment: @comment,
-                    errors: @comment.errors,
-                    updated: false
-                }
-            end
-
-        else
-            render json: {
-                updated: false,
-                errors: 'Comment not found'
-            }
-        end
-    end
-
+ 
     def destroy
         if @comment = Comment.find_by(id: params[:id])
             if @comment.delete
